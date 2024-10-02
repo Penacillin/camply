@@ -260,6 +260,9 @@ class SearchRecreationDotGovBase(BaseCampingSearch, ABC):
                 availabilities = self.campsite_finder.get_recdotgov_data(
                     campground_id=campground.facility_id, month=month
                 )
+                for campsite_info in availabilities["campsites"].values():
+                    if campsite_info["availabilities"] is None:
+                        campsite_info["availabilities"] = {}
                 campsites = self.campsite_finder.process_campsite_availability(
                     availability=availabilities,
                     recreation_area=campground.recreation_area,
